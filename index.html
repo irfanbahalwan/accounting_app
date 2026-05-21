@@ -1,0 +1,305 @@
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  .wrap{display:flex;min-height:580px;font-size:13px;color:var(--color-text-primary)}
+  .nav{width:210px;background:var(--color-background-secondary);border-right:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg) 0 0 var(--border-radius-lg);padding:14px 8px;display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+  .app-name{font-size:13px;font-weight:500;padding:4px 10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:6px;color:var(--color-text-primary)}
+  .nav-group{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-tertiary);padding:10px 10px 3px}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);transition:background .1s}
+  .nav-item:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+  .nav-item.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-secondary)}
+  .nav-item i{font-size:15px;flex-shrink:0;opacity:.75}
+  .main{flex:1;padding:20px 22px;background:var(--color-background-primary);border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0;overflow:auto}
+  .pg{display:none}.pg.active{display:block}
+  .ptitle{font-size:16px;font-weight:500;margin-bottom:3px}
+  .pdesc{font-size:12px;color:var(--color-text-tertiary);margin-bottom:16px}
+  .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+  .kc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:11px 13px}
+  .kl{font-size:11px;color:var(--color-text-tertiary);margin-bottom:3px}
+  .kv{font-size:18px;font-weight:500}
+  .kv.g{color:var(--color-text-success)}.kv.r{color:var(--color-text-danger)}
+  .ks{font-size:11px;color:var(--color-text-tertiary);margin-top:2px}
+  .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .st{font-size:12px;font-weight:500}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{text-align:left;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);padding:5px 8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+  td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  .bd{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:500}
+  .bg{background:var(--color-background-success);color:var(--color-text-success)}
+  .ba{background:var(--color-background-warning);color:var(--color-text-warning)}
+  .br{background:var(--color-background-danger);color:var(--color-text-danger)}
+  .bb{background:var(--color-background-info);color:var(--color-text-info)}
+  .bgr{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+  .mono{font-family:var(--font-mono);font-size:11px;color:var(--color-text-tertiary)}
+  .rg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
+  .rc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;cursor:pointer}
+  .rc:hover{border:0.5px solid var(--color-border-secondary)}
+  .rl{font-size:12px;font-weight:500;margin-bottom:3px}
+  .rs{font-size:11px;color:var(--color-text-secondary)}
+</style>
+
+<div class="wrap">
+<nav class="nav">
+  <div class="app-name"><i class="ti ti-building" aria-hidden="true" style="font-size:14px;margin-right:6px"></i>Akuntansi</div>
+
+  <div class="nav-group">Utama</div>
+  <div class="nav-item active" onclick="show('dashboard',this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Dashboard</div>
+
+  <div class="nav-group">Transaksi Kas & Bank</div>
+  <div class="nav-item" onclick="show('bkm',this)"><i class="ti ti-cash" aria-hidden="true"></i>BKM — Kas masuk</div>
+  <div class="nav-item" onclick="show('bkk',this)"><i class="ti ti-cash-off" aria-hidden="true"></i>BKK — Kas keluar</div>
+  <div class="nav-item" onclick="show('bbm',this)"><i class="ti ti-building-bank" aria-hidden="true"></i>BBM — Bank masuk</div>
+  <div class="nav-item" onclick="show('bbk',this)"><i class="ti ti-building-bank" aria-hidden="true"></i>BBK — Bank keluar</div>
+  <div class="nav-item" onclick="show('mutasi',this)"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>Mutasi bank</div>
+
+  <div class="nav-group">Piutang & Hutang</div>
+  <div class="nav-item" onclick="show('piutang',this)"><i class="ti ti-receipt" aria-hidden="true"></i>Piutang usaha</div>
+  <div class="nav-item" onclick="show('hutang',this)"><i class="ti ti-credit-card" aria-hidden="true"></i>Hutang usaha</div>
+
+  <div class="nav-group">Jurnal & Buku Besar</div>
+  <div class="nav-item" onclick="show('jurnal',this)"><i class="ti ti-book" aria-hidden="true"></i>Jurnal umum</div>
+  <div class="nav-item" onclick="show('bukubesar',this)"><i class="ti ti-books" aria-hidden="true"></i>Buku besar</div>
+  <div class="nav-item" onclick="show('coa',this)"><i class="ti ti-list-numbers" aria-hidden="true"></i>Daftar akun (CoA)</div>
+
+  <div class="nav-group">Laporan</div>
+  <div class="nav-item" onclick="show('aruskasrep',this)"><i class="ti ti-chart-arrows-vertical" aria-hidden="true"></i>Arus kas</div>
+  <div class="nav-item" onclick="show('labarugi',this)"><i class="ti ti-chart-bar" aria-hidden="true"></i>Laba rugi</div>
+  <div class="nav-item" onclick="show('neraca',this)"><i class="ti ti-scale" aria-hidden="true"></i>Neraca</div>
+
+  <div class="nav-group">Master & Pengaturan</div>
+  <div class="nav-item" onclick="show('settings',this)"><i class="ti ti-settings" aria-hidden="true"></i>Pengaturan</div>
+</nav>
+
+<main class="main">
+
+<div class="pg active" id="p-dashboard">
+  <div class="ptitle">Dashboard</div>
+  <div class="pdesc">Ringkasan keuangan bulan berjalan</div>
+  <div class="kpi">
+    <div class="kc"><div class="kl">Saldo kas</div><div class="kv">Rp 7,0 jt</div><div class="ks">Akun 111</div></div>
+    <div class="kc"><div class="kl">Saldo bank</div><div class="kv">Rp 84,2 jt</div><div class="ks">Akun 112</div></div>
+    <div class="kc"><div class="kl">Piutang usaha</div><div class="kv r">Rp 38,0 jt</div><div class="ks">Akun 121</div></div>
+    <div class="kc"><div class="kl">Hutang usaha</div><div class="kv r">Rp 12,5 jt</div><div class="ks">Akun 201</div></div>
+    <div class="kc"><div class="kl">Total pendapatan</div><div class="kv g">Rp 142,0 jt</div><div class="ks">Akun 411–416</div></div>
+    <div class="kc"><div class="kl">Total beban</div><div class="kv">Rp 97,3 jt</div><div class="ks">Akun 501–516</div></div>
+  </div>
+  <div class="sh"><span class="st">Transaksi terbaru</span></div>
+  <table>
+    <tr><th>Tanggal</th><th>No. Bukti</th><th>Keterangan</th><th>Akun</th><th style="text-align:right">Debit</th><th style="text-align:right">Kredit</th></tr>
+    <tr><td>02/02/26</td><td class="mono">BKK-001/II/26</td><td>Perjalanan dinas — Erwin</td><td class="mono">512</td><td style="text-align:right">—</td><td style="text-align:right">675.000</td></tr>
+    <tr><td>09/01/26</td><td class="mono">BBM-001/I/26</td><td>Tanda jadi JO26001</td><td class="mono">412</td><td style="text-align:right">20.000.000</td><td style="text-align:right">—</td></tr>
+    <tr><td>02/01/26</td><td class="mono">BBK-001/I/26</td><td>Pembayaran part JO25001</td><td class="mono">201</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-bkm">
+  <div class="ptitle">BKM — Bukti kas masuk</div>
+  <div class="pdesc">Catat semua penerimaan uang tunai. Nomor otomatis: BKM-XXX/bulan/tahun</div>
+  <table>
+    <tr><th>No. Bukti</th><th>Tanggal</th><th>Diterima dari</th><th>Akun</th><th>Keterangan</th><th style="text-align:right">Jumlah</th></tr>
+    <tr><td class="mono">BKM-001/I/26</td><td>05/01/26</td><td>Bank</td><td class="mono">111</td><td>Penarikan tunai</td><td style="text-align:right">2.500.000</td></tr>
+    <tr><td class="mono">BKM-002/I/26</td><td>15/01/26</td><td>PT Maju Jaya</td><td class="mono">111</td><td>Pembayaran invoice</td><td style="text-align:right">5.000.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-bkk">
+  <div class="ptitle">BKK — Bukti kas keluar</div>
+  <div class="pdesc">Catat semua pengeluaran uang tunai. Nomor otomatis: BKK-XXX/bulan/tahun</div>
+  <table>
+    <tr><th>No. Bukti</th><th>Tanggal</th><th>Dibayar ke</th><th>Akun</th><th>Keterangan</th><th style="text-align:right">Jumlah</th></tr>
+    <tr><td class="mono">BKK-001/I/26</td><td>02/01/26</td><td>Internal</td><td class="mono">515</td><td>Beban lain-lain</td><td style="text-align:right">225.000</td></tr>
+    <tr><td class="mono">BKK-002/I/26</td><td>08/01/26</td><td>Internal</td><td class="mono">514</td><td>Beban operasional</td><td style="text-align:right">300.000</td></tr>
+    <tr><td class="mono">BKK-008/I/26</td><td>22/01/26</td><td>Supplier</td><td class="mono">506</td><td>Beban transportasi</td><td style="text-align:right">91.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-bbm">
+  <div class="ptitle">BBM — Bukti bank masuk</div>
+  <div class="pdesc">Catat semua penerimaan via transfer bank. Nomor: BBM-XXX/bulan/tahun</div>
+  <table>
+    <tr><th>No. Bukti</th><th>Tanggal</th><th>Diterima dari</th><th>Akun</th><th>Keterangan</th><th style="text-align:right">Jumlah</th></tr>
+    <tr><td class="mono">BBM-001/I/26</td><td>09/01/26</td><td>Klien</td><td class="mono">412</td><td>Tanda jadi JO26001</td><td style="text-align:right">20.000.000</td></tr>
+    <tr><td class="mono">BBM-002/I/26</td><td>22/01/26</td><td>PT Abadi</td><td class="mono">201</td><td>Pelunasan hutang usaha</td><td style="text-align:right">15.000.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-bbk">
+  <div class="ptitle">BBK — Bukti bank keluar</div>
+  <div class="pdesc">Catat semua pengeluaran via transfer bank. Nomor: BBK-XXX/bulan/tahun</div>
+  <table>
+    <tr><th>No. Bukti</th><th>Tanggal</th><th>Dibayar ke</th><th>Akun</th><th>Keterangan</th><th style="text-align:right">Jumlah</th><th>Admin bank</th></tr>
+    <tr><td class="mono">BBK-001/I/26</td><td>02/01/26</td><td>Supplier</td><td class="mono">201</td><td>Pembayaran part JO25001 (DP 40% + PP1)</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+    <tr><td class="mono">BBK-024/I/26</td><td>26/01/26</td><td>Karyawan</td><td class="mono">502</td><td>Beban gaji</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-mutasi">
+  <div class="ptitle">Mutasi bank</div>
+  <div class="pdesc">Buku besar khusus akun 112 — Bank. Rekonsiliasi otomatis dengan BBM/BBK</div>
+  <table>
+    <tr><th>Tanggal</th><th>No. Akun</th><th>Keterangan</th><th>No. Bukti</th><th style="text-align:right">Debit</th><th style="text-align:right">Kredit</th><th style="text-align:right">Saldo</th></tr>
+    <tr><td>02/01/26</td><td class="mono">—</td><td>Saldo awal</td><td>—</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+    <tr><td>02/01/26</td><td class="mono">121</td><td>Piutang usaha</td><td class="mono">BBK-001</td><td style="text-align:right">—</td><td style="text-align:right">—</td><td style="text-align:right">—</td></tr>
+    <tr><td>09/01/26</td><td class="mono">201</td><td>Hutang usaha</td><td class="mono">BBM-001</td><td style="text-align:right">20.000.000</td><td style="text-align:right">—</td><td style="text-align:right">20.000.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-piutang">
+  <div class="ptitle">Piutang usaha</div>
+  <div class="pdesc">Daftar tagihan ke klien yang belum dibayar. Akun 121–123</div>
+  <table>
+    <tr><th>No. Job</th><th>Klien</th><th>Akun</th><th>Tgl faktur</th><th>Jatuh tempo</th><th style="text-align:right">Nilai</th><th>Status</th></tr>
+    <tr><td class="mono">JO26001</td><td>PT Maju Jaya</td><td class="mono">121</td><td>05/01/26</td><td>05/02/26</td><td style="text-align:right">24.000.000</td><td><span class="bd ba">Belum lunas</span></td></tr>
+    <tr><td class="mono">JO25012</td><td>CV Karya Baru</td><td class="mono">121</td><td>12/12/25</td><td>12/01/26</td><td style="text-align:right">11.500.000</td><td><span class="bd br">Jatuh tempo</span></td></tr>
+    <tr><td class="mono">JO25010</td><td>PT Abadi Teknik</td><td class="mono">121</td><td>01/11/25</td><td>01/01/26</td><td style="text-align:right">18.000.000</td><td><span class="bd bg">Lunas</span></td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-hutang">
+  <div class="ptitle">Hutang usaha</div>
+  <div class="pdesc">Tagihan dari supplier & subkontraktor yang belum dibayar. Akun 201–204</div>
+  <table>
+    <tr><th>Supplier</th><th>Akun</th><th>No. Bukti</th><th>Tgl faktur</th><th>Jatuh tempo</th><th style="text-align:right">Nilai</th><th>Status</th></tr>
+    <tr><td>Supplier A</td><td class="mono">201</td><td class="mono">BBK-001/I/26</td><td>02/01/26</td><td>02/02/26</td><td style="text-align:right">8.500.000</td><td><span class="bd ba">Belum lunas</span></td></tr>
+    <tr><td>Supplier B</td><td class="mono">201</td><td class="mono">BBM-002/I/26</td><td>22/01/26</td><td>22/02/26</td><td style="text-align:right">15.000.000</td><td><span class="bd bg">Lunas</span></td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-jurnal">
+  <div class="ptitle">Jurnal umum</div>
+  <div class="pdesc">Semua transaksi dalam format debit-kredit double-entry. Otomatis dari BKM/BKK/BBM/BBK</div>
+  <table>
+    <tr><th>Tanggal</th><th>No. Bukti</th><th>Akun</th><th>Keterangan</th><th style="text-align:right">Debit</th><th style="text-align:right">Kredit</th></tr>
+    <tr><td>02/01/26</td><td class="mono">BKK-001/I/26</td><td class="mono">515</td><td>Beban lain-lain</td><td style="text-align:right">225.000</td><td style="text-align:right">—</td></tr>
+    <tr><td>02/01/26</td><td class="mono">BKK-001/I/26</td><td class="mono">111</td><td>Kas</td><td style="text-align:right">—</td><td style="text-align:right">225.000</td></tr>
+    <tr><td>09/01/26</td><td class="mono">BBM-001/I/26</td><td class="mono">112</td><td>Bank</td><td style="text-align:right">20.000.000</td><td style="text-align:right">—</td></tr>
+    <tr><td>09/01/26</td><td class="mono">BBM-001/I/26</td><td class="mono">412</td><td>Penjualan jasa</td><td style="text-align:right">—</td><td style="text-align:right">20.000.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-bukubesar">
+  <div class="ptitle">Buku besar</div>
+  <div class="pdesc">Riwayat per akun. Pilih nomor akun untuk melihat mutasi lengkap</div>
+  <table>
+    <tr><th>No. Akun</th><th>Nama akun</th><th>Kategori</th><th style="text-align:right">Saldo debit</th><th style="text-align:right">Saldo kredit</th><th style="text-align:right">Saldo akhir</th></tr>
+    <tr><td class="mono">111</td><td>Kas</td><td>Aktiva lancar</td><td style="text-align:right">7.500.000</td><td style="text-align:right">500.000</td><td style="text-align:right">7.000.000</td></tr>
+    <tr><td class="mono">112</td><td>Bank</td><td>Aktiva lancar</td><td style="text-align:right">90.000.000</td><td style="text-align:right">5.800.000</td><td style="text-align:right">84.200.000</td></tr>
+    <tr><td class="mono">121</td><td>Piutang usaha</td><td>Piutang</td><td style="text-align:right">38.000.000</td><td style="text-align:right">—</td><td style="text-align:right">38.000.000</td></tr>
+    <tr><td class="mono">201</td><td>Hutang usaha</td><td>Hutang</td><td style="text-align:right">—</td><td style="text-align:right">12.500.000</td><td style="text-align:right">12.500.000</td></tr>
+    <tr><td class="mono">412</td><td>Penjualan jasa</td><td>Pendapatan</td><td style="text-align:right">—</td><td style="text-align:right">142.000.000</td><td style="text-align:right">142.000.000</td></tr>
+    <tr><td class="mono">502</td><td>Beban gaji</td><td>Beban</td><td style="text-align:right">19.500.000</td><td style="text-align:right">—</td><td style="text-align:right">19.500.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-coa">
+  <div class="ptitle">Daftar akun (Chart of Accounts)</div>
+  <div class="pdesc">Nomor akun sesuai file Excel Anda — dapat disesuaikan</div>
+  <table>
+    <tr><th>No. Akun</th><th>Nama akun</th><th>Tipe</th><th>Kategori</th></tr>
+    <tr><td class="mono">111</td><td>Kas</td><td><span class="bd bb">Aktiva</span></td><td>Aktiva lancar</td></tr>
+    <tr><td class="mono">112</td><td>Bank</td><td><span class="bd bb">Aktiva</span></td><td>Aktiva lancar</td></tr>
+    <tr><td class="mono">121</td><td>Piutang usaha</td><td><span class="bd bb">Aktiva</span></td><td>Piutang</td></tr>
+    <tr><td class="mono">122</td><td>Piutang karyawan</td><td><span class="bd bb">Aktiva</span></td><td>Piutang</td></tr>
+    <tr><td class="mono">131</td><td>Peralatan kantor</td><td><span class="bd bb">Aktiva</span></td><td>Aktiva tetap</td></tr>
+    <tr><td class="mono">201</td><td>Hutang usaha</td><td><span class="bd br">Hutang</span></td><td>Hutang lancar</td></tr>
+    <tr><td class="mono">202</td><td>Hutang jangka panjang</td><td><span class="bd br">Hutang</span></td><td>Hutang jk panjang</td></tr>
+    <tr><td class="mono">301</td><td>Modal disetor</td><td><span class="bd bgr">Modal</span></td><td>Ekuitas</td></tr>
+    <tr><td class="mono">411</td><td>Penjualan diterima dimuka</td><td><span class="bd bg">Pendapatan</span></td><td>Penjualan</td></tr>
+    <tr><td class="mono">412</td><td>Penjualan usaha</td><td><span class="bd bg">Pendapatan</span></td><td>Penjualan</td></tr>
+    <tr><td class="mono">413</td><td>Jasa dan servis</td><td><span class="bd bg">Pendapatan</span></td><td>Penjualan</td></tr>
+    <tr><td class="mono">502</td><td>Beban gaji</td><td><span class="bd ba">Beban</span></td><td>Beban operasional</td></tr>
+    <tr><td class="mono">504</td><td>Beban biaya dan bunga</td><td><span class="bd ba">Beban</span></td><td>Beban keuangan</td></tr>
+    <tr><td class="mono">506</td><td>Beban transportasi</td><td><span class="bd ba">Beban</span></td><td>Beban operasional</td></tr>
+    <tr><td class="mono">512</td><td>Beban perjalanan dinas</td><td><span class="bd ba">Beban</span></td><td>Beban operasional</td></tr>
+    <tr><td class="mono">516</td><td>Beban pajak</td><td><span class="bd ba">Beban</span></td><td>Beban pajak</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-aruskasrep">
+  <div class="ptitle">Laporan arus kas</div>
+  <div class="pdesc">Sumber: Arus Kas.xlsx — akun 111 (kas) dan 112 (bank)</div>
+  <table>
+    <tr><th>Aktivitas</th><th>Keterangan</th><th style="text-align:right">Januari 2026</th></tr>
+    <tr><td colspan="3" style="font-weight:500;padding:8px;background:var(--color-background-secondary)">Arus kas dari aktivitas operasi</td></tr>
+    <tr><td></td><td>Penerimaan dari pelanggan (BBM/BKM)</td><td style="text-align:right">25.000.000</td></tr>
+    <tr><td></td><td>Pembayaran beban operasional (BKK)</td><td style="text-align:right">(312.000)</td></tr>
+    <tr><td></td><td>Pembayaran transportasi & perjalanan dinas</td><td style="text-align:right">(91.000)</td></tr>
+    <tr><td></td><td>Beban lain-lain</td><td style="text-align:right">(545.000)</td></tr>
+    <tr><td colspan="2" style="font-weight:500">Subtotal operasi</td><td style="text-align:right;font-weight:500">24.052.000</td></tr>
+    <tr><td colspan="3" style="font-weight:500;padding:8px;background:var(--color-background-secondary)">Arus kas dari aktivitas investasi</td></tr>
+    <tr><td></td><td>Pembelian peralatan kantor</td><td style="text-align:right">(165.000)</td></tr>
+    <tr><td colspan="3" style="font-weight:500;padding:8px;background:var(--color-background-secondary)">Arus kas dari aktivitas pendanaan</td></tr>
+    <tr><td></td><td>Pembayaran hutang usaha</td><td style="text-align:right">(8.500.000)</td></tr>
+    <tr><td colspan="2" style="font-weight:500;border-top:1px solid var(--color-border-secondary)">Kenaikan bersih kas & bank</td><td style="text-align:right;font-weight:500;color:var(--color-text-success)">15.387.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-labarugi">
+  <div class="ptitle">Laba rugi</div>
+  <div class="pdesc">Dihasilkan dari jurnal — akun 411–416 (pendapatan) dan 501–516 (beban)</div>
+  <table>
+    <tr><th>No. Akun</th><th>Keterangan</th><th style="text-align:right">Mei 2026</th></tr>
+    <tr><td class="mono">411–413</td><td>Pendapatan penjualan & jasa</td><td style="text-align:right">142.000.000</td></tr>
+    <tr><td class="mono">415–416</td><td>Komisi penjualan</td><td style="text-align:right">—</td></tr>
+    <tr><td colspan="2" style="font-weight:500">Total pendapatan</td><td style="text-align:right;font-weight:500">142.000.000</td></tr>
+    <tr><td class="mono">501–516</td><td>Total beban</td><td style="text-align:right">(97.300.000)</td></tr>
+    <tr><td colspan="2" style="font-weight:500;border-top:1px solid var(--color-border-secondary);color:var(--color-text-success)">Laba bersih</td><td style="text-align:right;font-weight:500;color:var(--color-text-success)">44.700.000</td></tr>
+  </table>
+</div>
+
+<div class="pg" id="p-neraca">
+  <div class="ptitle">Neraca</div>
+  <div class="pdesc">Posisi keuangan per akhir periode — aktiva = hutang + modal</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
+    <div>
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:8px">Aktiva</div>
+      <table>
+        <tr><th>Akun</th><th>Nama</th><th style="text-align:right">Saldo</th></tr>
+        <tr><td class="mono">111</td><td>Kas</td><td style="text-align:right">7.000.000</td></tr>
+        <tr><td class="mono">112</td><td>Bank</td><td style="text-align:right">84.200.000</td></tr>
+        <tr><td class="mono">121</td><td>Piutang usaha</td><td style="text-align:right">38.000.000</td></tr>
+        <tr><td class="mono">131</td><td>Peralatan kantor</td><td style="text-align:right">5.000.000</td></tr>
+        <tr><td colspan="2" style="font-weight:500">Total aktiva</td><td style="text-align:right;font-weight:500">134.200.000</td></tr>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:8px">Hutang & Modal</div>
+      <table>
+        <tr><th>Akun</th><th>Nama</th><th style="text-align:right">Saldo</th></tr>
+        <tr><td class="mono">201</td><td>Hutang usaha</td><td style="text-align:right">12.500.000</td></tr>
+        <tr><td class="mono">202</td><td>Hutang jk panjang</td><td style="text-align:right">—</td></tr>
+        <tr><td class="mono">301</td><td>Modal disetor</td><td style="text-align:right">77.000.000</td></tr>
+        <tr><td class="mono">—</td><td>Laba ditahan</td><td style="text-align:right">44.700.000</td></tr>
+        <tr><td colspan="2" style="font-weight:500">Total hutang + modal</td><td style="text-align:right;font-weight:500">134.200.000</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="p-settings">
+  <div class="ptitle">Pengaturan</div>
+  <div class="pdesc">Data perusahaan, pengguna, format nomor bukti, dan integrasi</div>
+  <table>
+    <tr><th>Bagian</th><th>Keterangan</th></tr>
+    <tr><td>Profil perusahaan</td><td>Nama, NPWP, alamat, logo, rekening bank</td></tr>
+    <tr><td>Format no. bukti</td><td>BKM/BKK/BBM/BBK — format nomor otomatis per bulan/tahun</td></tr>
+    <tr><td>Daftar akun (CoA)</td><td>Tambah / ubah nomor akun sesuai kebutuhan</td></tr>
+    <tr><td>Pengguna & hak akses</td><td>Admin, Kasir, Akuntan — akses per menu</td></tr>
+    <tr><td>Periode akuntansi</td><td>Buka / tutup periode bulanan</td></tr>
+    <tr><td>Backup & export</td><td>Export ke Excel per format file asli (BKM, BKK, BBM, BBK, Jurnal, Arus Kas)</td></tr>
+  </table>
+</div>
+
+</main>
+</div>
+
+<script>
+function show(id,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('p-'+id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
